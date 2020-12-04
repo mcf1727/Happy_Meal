@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Happy Meal</string>
+    <string name="action_search">Search</string>
+    <string name="NO_INTERNET_TOAST">No Internet connexion</string>
+</resources>
