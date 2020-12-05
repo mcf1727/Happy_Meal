@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-//import android.example.com.happymeal.data.AppDatabase;
+import android.example.com.happymeal.data.AppDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -40,27 +40,37 @@ public class DetailActivity extends AppCompatActivity {
     //https://api.edamam.com/api/nutrition-data?app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&ingr=1%20large%20apple
     //https://api.edamam.com/api/nutrition-data?app_id=1ac5019d&app_key=b372563e9a44d1f0f4e5b39d0a4c21c9&ingr=1%20large%20apple
 
+    private static boolean NUTRITION_SAVED;
+
     String foodToShare;
-//    private AppDatabase mDb;
+    Nutrition nutrition;
+    String foodToSearch;
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        mDb = AppDatabase.getInstance(getApplicationContext());
+        mDb = AppDatabase.getInstance(getApplicationContext());
 
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity != null) {
             if (intentThatStartedThisActivity.hasExtra(EXTRA_FOOD_TO_SEARCH)) {
-                String foodToSearch = intentThatStartedThisActivity.getStringExtra(EXTRA_FOOD_TO_SEARCH);
+                foodToSearch = intentThatStartedThisActivity.getStringExtra(EXTRA_FOOD_TO_SEARCH);
 
                 if (foodToSearch != null) {
                     searchFood(foodToSearch);
                     setTitle(foodToSearch);
                 }
             }
+
         }
+
+        setUpNutritionDetailViewModel();
+    }
+
+    private void setUpNutritionDetailViewModel() {
 
     }
 
@@ -79,9 +89,11 @@ public class DetailActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Nutrition> call, Response<Nutrition> response) {
                     //TODO when result can't be found / enter nothing / enter espace
-                    Nutrition nutrition = response.body();
+                    nutrition = response.body();
                     float calories = nutrition.getCalories();
                     String[] dietLabels = nutrition.getDietLabels();
+                    nutrition.setFood(foodToSearch);
+                    nutrition.setMainDietLabel(dietLabels[0]);
                     foodToShare = foodToSearch + "\n" + "Calories : " + calories + " Kcal"  + "\n" + "Diet label : " + dietLabels[0] + "\n" + FOOD_SHARE_HASHTAG;
 
                     Nutrients nutrients = nutrition.getNutrients();
@@ -181,15 +193,66 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                Log.d("log", "save");
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        NUTRITION_SAVED = mDb.nutritionDao().loadNutritionByFood(foodToSearch) != null;
+                        if (!NUTRITION_SAVED) {
+                            mDb.nutritionDao().insertNutrition(nutrition);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DetailActivity.this, "Food saved", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DetailActivity.this, "The food has already been saved", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+
                 return true;
+
             case R.id.delete:
-                Log.d("log", "delete");
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        NUTRITION_SAVED = mDb.nutritionDao().loadNutritionByFood(foodToSearch) != null;
+                        if (NUTRITION_SAVED) {
+                            Nutrition nutritionToDelete = mDb.nutritionDao().loadNutritionByFood(foodToSearch);
+                            mDb.nutritionDao().deleteNutrition(nutritionToDelete);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DetailActivity.this, "Food deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DetailActivity.this, "Can't delete the food that has not been saved", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+
                 return true;
+
             case R.id.share:
                 shareText(foodToShare);
                 Log.d("log", "share");
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

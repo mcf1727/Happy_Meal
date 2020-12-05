@@ -51,7 +51,7 @@ public class NutrientAdapter extends RecyclerView.Adapter<NutrientAdapter.Nutrie
     }
 
     public void setNutrientData(String[] nutrients) {
-        mNutrients = new String[nutrients.length];
+//        mNutrients = new String[nutrients.length];
         mNutrients = nutrients;
         notifyDataSetChanged();
     }
