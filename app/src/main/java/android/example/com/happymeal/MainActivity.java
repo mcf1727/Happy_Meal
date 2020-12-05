@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        View emptyView = findViewById(R.id.empty_view_main);
+                    if (nutritions.length == 0) {
+                            emptyView.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyView.setVisibility(View.GONE);
+                        }
                         mNutritionAdapter.setNutritionData(nutritions);
                     }
                 });

@@ -64,7 +64,6 @@ public class DetailActivity extends AppCompatActivity {
                     setTitle(foodToSearch);
                 }
             }
-
         }
 
         setUpNutritionDetailViewModel();
@@ -92,11 +91,15 @@ public class DetailActivity extends AppCompatActivity {
                     nutrition = response.body();
                     float calories = nutrition.getCalories();
                     String[] dietLabels = nutrition.getDietLabels();
+                    Nutrients nutrients = nutrition.getNutrients();
+
+                    if (String.valueOf(calories) != null && dietLabels.length != 0 && nutrients != null) {
+
+
                     nutrition.setFood(foodToSearch);
                     nutrition.setMainDietLabel(dietLabels[0]);
                     foodToShare = foodToSearch + "\n" + "Calories : " + calories + " Kcal"  + "\n" + "Diet label : " + dietLabels[0] + "\n" + FOOD_SHARE_HASHTAG;
 
-                    Nutrients nutrients = nutrition.getNutrients();
                     Nutrient[] objectNutrients = new Nutrient[31];
                     objectNutrients[0] = nutrients.getENERC_KCAL();
                     objectNutrients[1] = nutrients.getFAT();
@@ -156,8 +159,13 @@ public class DetailActivity extends AppCompatActivity {
 
                     detailCaloriesTextView.setText("Calories : " + calories + " Kcal");
                     detailDietLabelTextView.setText("Diet label : " + dietLabels[0]);
-
                     mNutrientAdapter.setNutrientData(stringNutrients);
+
+                    } else {
+                        Toast.makeText(DetailActivity.this,  "Your entered data isn't correct", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+
                 }
 
                 @Override

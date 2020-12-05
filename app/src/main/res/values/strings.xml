@@ -2,4 +2,6 @@
     <string name="app_name">Happy Meal</string>
     <string name="action_search">Search</string>
     <string name="NO_INTERNET_TOAST">No Internet connexion</string>
+    <string name="empty_view_title_text">It\'s a bit lonely here...</string>
+    <string name="empty_view_subtitle_text">Get started by adding the food</string>
 </resources>
