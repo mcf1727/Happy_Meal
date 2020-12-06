@@ -4,4 +4,5 @@
     <string name="NO_INTERNET_TOAST">No Internet connexion</string>
     <string name="empty_view_title_text">It\'s a bit lonely here...</string>
     <string name="empty_view_subtitle_text">Get started by adding the food</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
