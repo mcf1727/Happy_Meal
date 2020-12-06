@@ -15,8 +15,8 @@ public class MainViewModel extends AndroidViewModel {
 
     private static final String TAG = MainViewModel.class.getSimpleName();
 
-//    private LiveData<Nutrition[]> mNutritions;
-    private Nutrition[] mNutritions;
+    private LiveData<Nutrition[]> mNutritions;
+//    private Nutrition[] mNutritions;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -26,6 +26,6 @@ public class MainViewModel extends AndroidViewModel {
         mNutritions = database.nutritionDao().loadAllNutritions();
     }
 
-//    public LiveData<Nutrition[]> getNutritions() { return mNutritions; }
-    public Nutrition[] getNutritions() { return mNutritions; }
+    public LiveData<Nutrition[]> getNutritions() { return mNutritions; }
+//    public Nutrition[] getNutritions() { return mNutritions; }
 }

@@ -95,74 +95,73 @@ public class DetailActivity extends AppCompatActivity {
 
                     if (String.valueOf(calories) != null && dietLabels.length != 0 && nutrients != null) {
 
+                        nutrition.setFood(foodToSearch);
+                        nutrition.setMainDietLabel(dietLabels[0]);
+                        foodToShare = foodToSearch + "\n" + "Calories : " + calories + " Kcal" + "\n" + "Diet label : " + dietLabels[0] + "\n" + FOOD_SHARE_HASHTAG;
 
-                    nutrition.setFood(foodToSearch);
-                    nutrition.setMainDietLabel(dietLabels[0]);
-                    foodToShare = foodToSearch + "\n" + "Calories : " + calories + " Kcal"  + "\n" + "Diet label : " + dietLabels[0] + "\n" + FOOD_SHARE_HASHTAG;
+                        Nutrient[] objectNutrients = new Nutrient[31];
+                        objectNutrients[0] = nutrients.getENERC_KCAL();
+                        objectNutrients[1] = nutrients.getFAT();
+                        objectNutrients[2] = nutrients.getFASAT();
+                        objectNutrients[3] = nutrients.getFAMS();
+                        objectNutrients[4] = nutrients.getFAPU();
+                        objectNutrients[5] = nutrients.getCHOCDF();
+                        objectNutrients[6] = nutrients.getFIBTG();
+                        objectNutrients[7] = nutrients.getSUGAR();
+                        objectNutrients[8] = nutrients.getPROCNT();
+                        objectNutrients[9] = nutrients.getCHOLE();
+                        objectNutrients[10] = nutrients.getNA();
+                        objectNutrients[11] = nutrients.getCA();
+                        objectNutrients[12] = nutrients.getMG();
+                        objectNutrients[13] = nutrients.getK();
+                        objectNutrients[14] = nutrients.getFE();
+                        objectNutrients[15] = nutrients.getZN();
+                        objectNutrients[16] = nutrients.getP();
+                        objectNutrients[17] = nutrients.getVITA_RAE();
+                        objectNutrients[18] = nutrients.getVITC();
+                        objectNutrients[19] = nutrients.getTHIA();
+                        objectNutrients[20] = nutrients.getRIBF();
+                        objectNutrients[21] = nutrients.getNIA();
+                        objectNutrients[22] = nutrients.getVITB6A();
+                        objectNutrients[23] = nutrients.getFOLDFE();
+                        objectNutrients[24] = nutrients.getFOLFD();
+                        objectNutrients[25] = nutrients.getFOLAC();
+                        objectNutrients[26] = nutrients.getVITB12();
+                        objectNutrients[27] = nutrients.getVITD();
+                        objectNutrients[28] = nutrients.getTOCPHA();
+                        objectNutrients[29] = nutrients.getVITK1();
+                        objectNutrients[30] = nutrients.getWATER();
 
-                    Nutrient[] objectNutrients = new Nutrient[31];
-                    objectNutrients[0] = nutrients.getENERC_KCAL();
-                    objectNutrients[1] = nutrients.getFAT();
-                    objectNutrients[2] = nutrients.getFASAT();
-                    objectNutrients[3] = nutrients.getFAMS();
-                    objectNutrients[4] = nutrients.getFAPU();
-                    objectNutrients[5] = nutrients.getCHOCDF();
-                    objectNutrients[6] = nutrients.getFIBTG();
-                    objectNutrients[7] = nutrients.getSUGAR();
-                    objectNutrients[8] = nutrients.getPROCNT();
-                    objectNutrients[9] = nutrients.getCHOLE();
-                    objectNutrients[10] = nutrients.getNA();
-                    objectNutrients[11] = nutrients.getCA();
-                    objectNutrients[12] = nutrients.getMG();
-                    objectNutrients[13] = nutrients.getK();
-                    objectNutrients[14] = nutrients.getFE();
-                    objectNutrients[15] = nutrients.getZN();
-                    objectNutrients[16] = nutrients.getP();
-                    objectNutrients[17] = nutrients.getVITA_RAE();
-                    objectNutrients[18] = nutrients.getVITC();
-                    objectNutrients[19] = nutrients.getTHIA();
-                    objectNutrients[20] = nutrients.getRIBF();
-                    objectNutrients[21] = nutrients.getNIA();
-                    objectNutrients[22] = nutrients.getVITB6A();
-                    objectNutrients[23] = nutrients.getFOLDFE();
-                    objectNutrients[24] = nutrients.getFOLFD();
-                    objectNutrients[25] = nutrients.getFOLAC();
-                    objectNutrients[26] = nutrients.getVITB12();
-                    objectNutrients[27] = nutrients.getVITD();
-                    objectNutrients[28] = nutrients.getTOCPHA();
-                    objectNutrients[29] = nutrients.getVITK1();
-                    objectNutrients[30] = nutrients.getWATER();
+                        String[] stringNutrients = new String[31];
+                        String[] labelStringNutrients = new String[31];
+                        float[] quantityStringNutrients = new float[31];
+                        String[] unitStringNutrients = new String[31];
 
-                    String[] stringNutrients = new String[31];
-                    String[] labelStringNutrients = new String[31];
-                    float[] quantityStringNutrients = new float[31];
-                    String[] unitStringNutrients = new String[31];
+                        for (int i = 0; i < 31; i++) {
+                            labelStringNutrients[i] = objectNutrients[i].getLabel();
+                            //TODO have only 2 numbers after .
+                            quantityStringNutrients[i] = objectNutrients[i].getQuantity();
+                            unitStringNutrients[i] = objectNutrients[i].getUnit();
+                            stringNutrients[i] = labelStringNutrients[i] + " : " + quantityStringNutrients[i] + " " + unitStringNutrients[i];
+                            //Log.d("testss", stringNutrients[i]);
+                        }
 
-                    for (int i=0; i<31; i++) {
-                        labelStringNutrients[i] = objectNutrients[i].getLabel();
-                        //TODO have only 2 numbers after .
-                        quantityStringNutrients[i] = objectNutrients[i].getQuantity();
-                        unitStringNutrients[i] = objectNutrients[i].getUnit();
-                        stringNutrients[i] = labelStringNutrients[i] + " : " + quantityStringNutrients[i] + " " + unitStringNutrients[i];
-                        //Log.d("testss", stringNutrients[i]);
-                    }
+                        TextView detailCaloriesTextView = findViewById(R.id.tv_detail_calories);
+                        TextView detailDietLabelTextView = findViewById(R.id.tv_detail_diet_label);
+                        RecyclerView mRecyclerView = findViewById(R.id.rv_detail_nutrients);
 
-                    TextView detailCaloriesTextView = findViewById(R.id.tv_detail_calories);
-                    TextView detailDietLabelTextView = findViewById(R.id.tv_detail_diet_label);
-                    RecyclerView mRecyclerView = findViewById(R.id.rv_detail_nutrients);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(DetailActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
+                        NutrientAdapter mNutrientAdapter = new NutrientAdapter();
+                        mRecyclerView.setAdapter(mNutrientAdapter);
 
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(DetailActivity.this);
-                    mRecyclerView.setLayoutManager(layoutManager);
-                    mRecyclerView.setHasFixedSize(true);
-                    NutrientAdapter mNutrientAdapter = new NutrientAdapter();
-                    mRecyclerView.setAdapter(mNutrientAdapter);
-
-                    detailCaloriesTextView.setText("Calories : " + calories + " Kcal");
-                    detailDietLabelTextView.setText("Diet label : " + dietLabels[0]);
-                    mNutrientAdapter.setNutrientData(stringNutrients);
+                        detailCaloriesTextView.setText("Calories : " + calories + " Kcal");
+                        detailDietLabelTextView.setText("Diet label : " + dietLabels[0]);
+                        mNutrientAdapter.setNutrientData(stringNutrients);
 
                     } else {
-                        Toast.makeText(DetailActivity.this,  "Your entered data isn't correct", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailActivity.this, "Your entered data isn't correct", Toast.LENGTH_LONG).show();
                         finish();
                     }
 
@@ -170,7 +169,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Nutrition> call, Throwable t) {
-                    Log.d(LOG_TAG, t.getMessage() + " onFailure ");
+                    Log.d(LOG_TAG, t.getMessage());
                 }
             });
         } else {

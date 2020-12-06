@@ -1,9 +1,13 @@
 package android.example.com.happymeal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.example.com.happymeal.data.AppDatabase;
 import android.example.com.happymeal.data.Nutrition;
@@ -14,6 +18,8 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity implements NutritionAdapter.ListItemClickListener{
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private AppDatabase mDb;
     NutritionAdapter mNutritionAdapter;
@@ -43,30 +49,53 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
                 startActivity(intentToStartSearchActivity);
             }
         });
+        setUpMainViewModel();
+    }
+
+    private void setUpMainViewModel() {
+//        final LiveData<Nutrition[]> nutritions = mDb.nutritionDao().loadAllNutritions();
+//        Log.d(TAG, "Receiving database update from LiveData");
+        // TODO to simplify by Android Architecture components ---- done
+        MainViewModelFactory factory = new MainViewModelFactory(getApplication());
+        final MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
+        final Observer<Nutrition[]> nutritionObserver = new Observer<Nutrition[]>() {
+            @Override
+            public void onChanged(Nutrition[] nutritions) {
+                View emptyView = findViewById(R.id.empty_view_main);
+                if (nutritions.length == 0) {
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                }
+                Log.d(TAG, "Receiving database update from LiveData in ViewModel");
+                mNutritionAdapter.setNutritionData(nutritions);
+            }
+        };
+        viewModel.getNutritions().observe(this, nutritionObserver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                final Nutrition[] nutritions = mDb.nutritionDao().loadAllNutritions();
-                // TODO to simplify by Android Architecture components
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        View emptyView = findViewById(R.id.empty_view_main);
-                    if (nutritions.length == 0) {
-                            emptyView.setVisibility(View.VISIBLE);
-                        } else {
-                            emptyView.setVisibility(View.GONE);
-                        }
-                        mNutritionAdapter.setNutritionData(nutritions);
-                    }
-                });
-            }
-        });
+//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                final LiveData<Nutrition[]> nutritions = mDb.nutritionDao().loadAllNutritions();
+//                // TODO to simplify by Android Architecture components
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        View emptyView = findViewById(R.id.empty_view_main);
+//                    if (nutritions.length == 0) {
+//                            emptyView.setVisibility(View.VISIBLE);
+//                        } else {
+//                            emptyView.setVisibility(View.GONE);
+//                        }
+//                        mNutritionAdapter.setNutritionData(nutritions);
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
