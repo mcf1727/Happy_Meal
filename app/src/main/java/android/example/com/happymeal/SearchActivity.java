@@ -40,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_search);
         //toolbar.inflateMenu(R.menu.menu_detail);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
+        overridePendingTransition(R.anim.anim_activity_up, R.anim.anim_activity_stay);
+    }
 }

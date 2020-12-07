@@ -17,4 +17,9 @@
         <item name="appWidgetBackgroundColor">@color/light_green_600</item>
         <item name="appWidgetTextColor">@color/light_green_50</item>
     </style>
+
+    <style name="Theme.HappyMeal.Trans" >
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
