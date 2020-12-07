@@ -2,6 +2,7 @@ package android.example.com.happymeal;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ShareCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +76,11 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         setUpNutritionDetailViewModel();
+
+        Toolbar toolbar = findViewById(R.id.toolbar_detail);
+        //toolbar.inflateMenu(R.menu.menu_detail);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setUpNutritionDetailViewModel() {

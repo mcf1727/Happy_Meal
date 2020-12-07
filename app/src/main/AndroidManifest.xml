@@ -13,9 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyMeal">
 
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".DetailActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".SearchActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

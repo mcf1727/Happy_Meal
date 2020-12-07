@@ -1,6 +1,7 @@
 package android.example.com.happymeal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -86,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
 //        addContentView(crashButton, new ViewGroup.LayoutParams(
 //                ViewGroup.LayoutParams.MATCH_PARENT,
 //                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        //toolbar.inflateMenu(R.menu.menu_detail);
+        setSupportActionBar(toolbar);
     }
 
     private void setUpMainViewModel() {
