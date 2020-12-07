@@ -14,6 +14,8 @@ import android.example.com.happymeal.data.Nutrition;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -21,6 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements NutritionAdapter.ListItemClickListener{
 
@@ -30,10 +33,14 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
     NutritionAdapter mNutritionAdapter;
     private AdView mAdView;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mDb = AppDatabase.getInstance(getApplicationContext());
 
@@ -66,6 +73,19 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+//        // Force a crash to test implementation Crashlytics
+//        Button crashButton = new Button(this);
+//        crashButton.setText("Crash!");
+//        crashButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                throw new RuntimeException("Test Crash"); // Force a crash
+//            }
+//        });
+//
+//        addContentView(crashButton, new ViewGroup.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void setUpMainViewModel() {
@@ -88,30 +108,6 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
             }
         };
         viewModel.getNutritions().observe(this, nutritionObserver);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                final LiveData<Nutrition[]> nutritions = mDb.nutritionDao().loadAllNutritions();
-//                // TODO to simplify by Android Architecture components
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        View emptyView = findViewById(R.id.empty_view_main);
-//                    if (nutritions.length == 0) {
-//                            emptyView.setVisibility(View.VISIBLE);
-//                        } else {
-//                            emptyView.setVisibility(View.GONE);
-//                        }
-//                        mNutritionAdapter.setNutritionData(nutritions);
-//                    }
-//                });
-//            }
-//        });
     }
 
     @Override

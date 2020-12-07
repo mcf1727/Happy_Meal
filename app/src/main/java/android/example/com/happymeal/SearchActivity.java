@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -24,9 +25,14 @@ public class SearchActivity extends AppCompatActivity {
                 //Toast.makeText(SearchActivity.this, "start search", Toast.LENGTH_SHORT).show();
                 //TODO correct editText
                 String foodToSearch = searchEditText.getText().toString();
-                Intent intentToStartDetailActivity = new Intent(SearchActivity.this, DetailActivity.class);
-                intentToStartDetailActivity.putExtra(DetailActivity.EXTRA_FOOD_TO_SEARCH, foodToSearch);
-                startActivity(intentToStartDetailActivity);
+
+                if (!foodToSearch.equals("")) {
+                    Intent intentToStartDetailActivity = new Intent(SearchActivity.this, DetailActivity.class);
+                    intentToStartDetailActivity.putExtra(DetailActivity.EXTRA_FOOD_TO_SEARCH, foodToSearch);
+                    startActivity(intentToStartDetailActivity);
+                } else {
+                    Toast.makeText(SearchActivity.this, "Please enter the food", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

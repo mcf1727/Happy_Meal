@@ -6,12 +6,16 @@ import androidx.core.app.ShareCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.example.com.happymeal.data.AppDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +34,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import android.example.com.happymeal.utilities.NutritionJsonUtils;
+
+import com.google.gson.Gson;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -58,11 +64,13 @@ public class DetailActivity extends AppCompatActivity {
         if (intentThatStartedThisActivity != null) {
             if (intentThatStartedThisActivity.hasExtra(EXTRA_FOOD_TO_SEARCH)) {
                 foodToSearch = intentThatStartedThisActivity.getStringExtra(EXTRA_FOOD_TO_SEARCH);
-
-                if (foodToSearch != null) {
-                    searchFood(foodToSearch);
-                    setTitle(foodToSearch);
-                }
+            } else {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                foodToSearch = sharedPreferences.getString("recent_nutrition", "NoRecentNutrition");
+            }
+            if (foodToSearch != null) {
+                searchFood(foodToSearch);
+                setTitle(foodToSearch);
             }
         }
 
@@ -138,12 +146,16 @@ public class DetailActivity extends AppCompatActivity {
                         String[] unitStringNutrients = new String[31];
 
                         for (int i = 0; i < 31; i++) {
-                            labelStringNutrients[i] = objectNutrients[i].getLabel();
-                            //TODO have only 2 numbers after .
-                            quantityStringNutrients[i] = objectNutrients[i].getQuantity();
-                            unitStringNutrients[i] = objectNutrients[i].getUnit();
-                            stringNutrients[i] = labelStringNutrients[i] + " : " + quantityStringNutrients[i] + " " + unitStringNutrients[i];
-                            //Log.d("testss", stringNutrients[i]);
+                            if (objectNutrients[i] != null) {
+                                labelStringNutrients[i] = objectNutrients[i].getLabel();
+                                //TODO have only 2 numbers after .
+                                quantityStringNutrients[i] = objectNutrients[i].getQuantity();
+                                unitStringNutrients[i] = objectNutrients[i].getUnit();
+                                stringNutrients[i] = labelStringNutrients[i] + " : " + quantityStringNutrients[i] + " " + unitStringNutrients[i];
+                                //Log.d("testss", stringNutrients[i]);
+                            } else {
+                                stringNutrients[i] = "Lack of information for this nutrient";
+                            }
                         }
 
                         TextView detailCaloriesTextView = findViewById(R.id.tv_detail_calories);
@@ -160,8 +172,22 @@ public class DetailActivity extends AppCompatActivity {
                         detailDietLabelTextView.setText("Diet label : " + dietLabels[0]);
                         mNutrientAdapter.setNutrientData(stringNutrients);
 
+                        // Save this food as the recent nutrition by SharedPreference
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DetailActivity.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(stringNutrients);
+                        editor.putString("recent_nutrition", foodToSearch)
+                                .putString("nutrients_widget", json);
+                        editor.apply();
+
+                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(DetailActivity.this);
+                        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(DetailActivity.this, NutrientWidgetProvider.class));
+                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lv_widget_nutrients_list);
+                        NutrientWidgetProvider.updateNutritionWidgets(DetailActivity.this, appWidgetManager,appWidgetIds);
+
                     } else {
-                        Toast.makeText(DetailActivity.this, "Your entered data isn't correct", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailActivity.this, "Your entered data isn't correct or it can't be found", Toast.LENGTH_LONG).show();
                         finish();
                     }
 
@@ -224,7 +250,6 @@ public class DetailActivity extends AppCompatActivity {
                         }
                     }
                 });
-
                 return true;
 
             case R.id.delete:
@@ -252,7 +277,6 @@ public class DetailActivity extends AppCompatActivity {
                         }
                     }
                 });
-
                 return true;
 
             case R.id.share:
