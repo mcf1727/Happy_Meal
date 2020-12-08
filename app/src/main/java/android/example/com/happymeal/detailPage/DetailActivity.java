@@ -45,8 +45,8 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_FOOD_TO_SEARCH = "android.example.com.happymeal.EXTRA_FOOD_TO_SEARCH";
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
-    private static final String APP_ID = "1ac5019d";
-    private static final String APP_KEY = "b372563e9a44d1f0f4e5b39d0a4c21c9";
+    private static final String APP_ID = "INSERT_YOUR_APP_ID";
+    private static final String APP_KEY = "INSERT_YOUR_APP_KEY";
     private static final String RECIPE_BASE_URL = "https://api.edamam.com/";
     private static final String FOOD_SHARE_HASHTAG = "#HappyMeal #Edamam";
 
