@@ -5,6 +5,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('../happymeal.jks')
+            storePassword 'happymeal'
+            keyAlias 'key0'
+            keyPassword 'happymeal'
+        }
+    }
     compileSdkVersion 29
 
     defaultConfig {
@@ -22,6 +30,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
