@@ -49,14 +49,12 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
         mRecyclerView.setHasFixedSize(true);
         mNutritionAdapter = new NutritionAdapter(this);
         mRecyclerView.setAdapter(mNutritionAdapter);
-//        mNutritionAdapter.setNutritionData(nutritions);
 
         FloatingActionButton searchFab = findViewById(R.id.search_fab);
         searchFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Toast.makeText(getApplicationContext(), "toStartSearchActivity", Toast.LENGTH_SHORT).show();
                 Intent intentToStartSearchActivity = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intentToStartSearchActivity);
             }
@@ -87,13 +85,10 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
 //                ViewGroup.LayoutParams.WRAP_CONTENT));
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        //toolbar.inflateMenu(R.menu.menu_detail);
         setSupportActionBar(toolbar);
     }
 
     private void setUpMainViewModel() {
-//        final LiveData<Nutrition[]> nutritions = mDb.nutritionDao().loadAllNutritions();
-//        Log.d(TAG, "Receiving database update from LiveData");
         MainViewModelFactory factory = new MainViewModelFactory(getApplication());
         final MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         final Observer<Nutrition[]> nutritionObserver = new Observer<Nutrition[]>() {

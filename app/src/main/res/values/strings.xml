@@ -24,4 +24,8 @@
     <string name="NUTRIENTS_TITLE">Nutrients :\u0020</string>
     <string name="please_enter_the_food_ex_1_apple">Please enter the food (Ex: 1 apple)</string>
     <string name="search_button_name">Search</string>
+    <string name="empty_nutrition_image">empty nutrition image</string>
+    <string name="save_menu_detail">Save</string>
+    <string name="delete_menu_detail">Delete</string>
+    <string name="share_menu_detail">Share</string>
 </resources>

@@ -87,7 +87,9 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.Nutr
     }
 
     public void setNutritionData(Nutrition[] nutritions) {
-        mNutritions = nutritions;
-        notifyDataSetChanged();
+        if (nutritions != null) {
+            mNutritions = nutritions;
+            notifyDataSetChanged();
+        }
     }
 }

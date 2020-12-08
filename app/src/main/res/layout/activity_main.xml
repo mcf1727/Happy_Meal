@@ -37,9 +37,10 @@
         app:layout_constraintBottom_toTopOf="@id/adView">
 
         <ImageView
-            android:id="@+id/empty_shelter_image"
+            android:id="@+id/empty_nutrition_image"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
+            android:contentDescription="@string/empty_nutrition_image"
             android:src="@drawable/empty_shelter_image"/>
 
         <TextView
@@ -47,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/empty_shelter_image"
+            android:layout_below="@id/empty_nutrition_image"
             android:text="@string/empty_view_title_text" />
 
         <TextView

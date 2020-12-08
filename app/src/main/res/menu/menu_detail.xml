@@ -4,16 +4,16 @@
 
     <item
         android:id="@+id/save"
-        android:title="Save"
+        android:title="@string/save_menu_detail"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/delete"
-        android:title="Delete"
+        android:title="@string/delete_menu_detail"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/share"
-        android:title="Share"
+        android:title="@string/share_menu_detail"
         app:showAsAction="never" />
 </menu>
