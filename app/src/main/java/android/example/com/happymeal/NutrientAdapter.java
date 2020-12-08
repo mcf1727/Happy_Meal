@@ -1,7 +1,6 @@
 package android.example.com.happymeal;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,6 @@ public class NutrientAdapter extends RecyclerView.Adapter<NutrientAdapter.Nutrie
     }
 
     public void setNutrientData(String[] nutrients) {
-//        mNutrients = new String[nutrients.length];
         mNutrients = nutrients;
         notifyDataSetChanged();
     }

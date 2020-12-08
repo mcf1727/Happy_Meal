@@ -12,7 +12,6 @@ import androidx.room.Update;
 public interface NutritionDao {
     @Query("SELECT * FROM nutrition")
     LiveData<Nutrition[]> loadAllNutritions();
-//    Nutrition[] loadAllNutritions();
 
     @Insert
     void insertNutrition(Nutrition nutrition);

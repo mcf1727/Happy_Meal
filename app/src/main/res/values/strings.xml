@@ -8,4 +8,20 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="search_food">Search food</string>
+    <string name="RECENT_NUTRITION">recent_nutrition</string>
+    <string name="NO_RECENT_NUITRITION">NoRecentNutrition</string>
+    <string name="CALORIES_TITLE">Calories : </string>
+    <string name="CALORIES_UNIT"> Kcal</string>
+    <string name="DIET_LABEL_TITLE">Diet label : </string>
+    <string name="LACK_INFORMATION_NUTRIENT">Lack of information for this nutrient</string>
+    <string name="NUTRIENTS_WIDGET">nutrients_widget</string>
+    <string name="ENTERED_DATA_NOT_CORRECT_OR_CAN_NOT_BE_FOUOND">Your entered data isn\'t correct or it can\'t be found</string>
+    <string name="FOOD_SAVED">Food saved</string>
+    <string name="FOOD_ALREADY_SAVED">The food has already been saved</string>
+    <string name="FOOD_DELETED">Food deleted</string>
+    <string name="CAN_NOT_DELETE_NOTE_NOT_BEEN_SAVED">Can\'t delete the food that has not been saved</string>
+    <string name="PLEASE_ENTER_FOOD">Please enter the food</string>
+    <string name="NUTRIENTS_TITLE">Nutrients :</string>
+    <string name="please_enter_the_food_ex_1_apple">Please enter the food (Ex: 1 apple)</string>
+    <string name="search_button_name">Search</string>
 </resources>

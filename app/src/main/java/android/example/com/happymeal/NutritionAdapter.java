@@ -2,7 +2,6 @@ package android.example.com.happymeal;
 
 import android.content.Context;
 import android.example.com.happymeal.data.Nutrition;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +49,10 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.Nutr
         float calories = nutrition.getCalories();
         String mainDietLabel = nutrition.getMainDietLabel();
         holder.mNutritionFoodTextView.setText(food);
-        holder.mNutritionCaloriesTextView.setText("Calories : " + String.valueOf(calories) + " Kcal");
-        holder.mNutritionDietLabelTextView.setText("Diet label : " + mainDietLabel);
+        String caloriesLine = holder.itemView.getContext().getString(R.string.CALORIES_TITLE) + calories +  holder.itemView.getContext().getString(R.string.CALORIES_UNIT);
+        String dietLabelLine =  holder.itemView.getContext().getString(R.string.DIET_LABEL_TITLE) + mainDietLabel;
+        holder.mNutritionCaloriesTextView.setText(caloriesLine);
+        holder.mNutritionDietLabelTextView.setText(dietLabelLine);
     }
 
     @Override
@@ -86,7 +87,6 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.Nutr
     }
 
     public void setNutritionData(Nutrition[] nutritions) {
-//        mNutritions = new Nutrition[nutritions.length];
         mNutritions = nutritions;
         notifyDataSetChanged();
     }

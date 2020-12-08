@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -37,7 +36,7 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     public void onDataSetChanged() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("nutrients_widget", null);
+        String json = sharedPreferences.getString(mContext.getString((R.string.NUTRIENTS_WIDGET)), null);
         Type type = new TypeToken<String[]>() {}.getType();
         mNutrients = gson.fromJson(json, type);
     }
@@ -59,7 +58,7 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         views.setTextViewText(R.id.tv_widget_nutrient, mNutrients[position]);
 
         Bundle extras = new Bundle();
-        extras.putStringArray("nutrients_widget", mNutrients);
+        extras.putStringArray(mContext.getString(R.string.NUTRIENTS_WIDGET), mNutrients);
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
         views.setOnClickFillInIntent(R.id.tv_widget_nutrient, fillInIntent);

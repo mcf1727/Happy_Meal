@@ -15,22 +15,12 @@ import android.widget.RemoteViews;
 public class
 NutrientWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-//        CharSequence widgetText = context.getString(R.string.appwidget_text);
-//        // Construct the RemoteViews object
-//        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.nutrient_widget_provider);
-//        views.setTextViewText(R.id.tv_widget_nutrient, widgetText);
-//
-//        // Instruct the widget manager to update the widget
-//        appWidgetManager.updateAppWidget(appWidgetId, views);
-
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         RemoteViews remoteViews;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String mRecentNutrition = sharedPreferences.getString("recent_nutrition", "NoRecentNutrition");
-        if (mRecentNutrition.equals("NoRecentNutrition")) {
+        String mRecentNutrition = sharedPreferences.getString(context.getString(R.string.RECENT_NUTRITION), context.getString(R.string.NO_RECENT_NUITRITION));
+        if (mRecentNutrition.equals(context.getString(R.string.NO_RECENT_NUITRITION))) {
             Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_nutrition_nutrients);
@@ -52,7 +42,7 @@ NutrientWidgetProvider extends AppWidgetProvider {
         remoteViews.setPendingIntentTemplate(R.id.lv_widget_nutrients_list, appPendingIntent);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String mRecentNutrition = sharedPreferences.getString("recent_nutrition", "NoRecentNutrition");
+        String mRecentNutrition = sharedPreferences.getString(context.getString(R.string.RECENT_NUTRITION), context.getString(R.string.NO_RECENT_NUITRITION));
         remoteViews.setTextViewText(R.id.tv_widget_name, mRecentNutrition);
         remoteViews.setOnClickPendingIntent(R.id.tv_widget_name, appPendingIntent);
 

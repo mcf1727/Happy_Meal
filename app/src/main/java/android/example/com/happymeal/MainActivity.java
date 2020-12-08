@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements NutritionAdapter.
     private void setUpMainViewModel() {
 //        final LiveData<Nutrition[]> nutritions = mDb.nutritionDao().loadAllNutritions();
 //        Log.d(TAG, "Receiving database update from LiveData");
-        // TODO to simplify by Android Architecture components ---- done
         MainViewModelFactory factory = new MainViewModelFactory(getApplication());
         final MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         final Observer<Nutrition[]> nutritionObserver = new Observer<Nutrition[]>() {

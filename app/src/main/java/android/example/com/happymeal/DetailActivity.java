@@ -40,12 +40,12 @@ import com.google.gson.Gson;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     public static final String EXTRA_FOOD_TO_SEARCH = "android.example.com.happymeal.EXTRA_FOOD_TO_SEARCH";
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+    private static final String APP_ID = "1ac5019d";
+    private static final String APP_KEY = "b372563e9a44d1f0f4e5b39d0a4c21c9";
     private static final String RECIPE_BASE_URL = "https://api.edamam.com/";
     private static final String FOOD_SHARE_HASHTAG = "#HappyMeal #Edamam";
-    //https://api.edamam.com/api/nutrition-data?app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&ingr=1%20large%20apple
-    //https://api.edamam.com/api/nutrition-data?app_id=1ac5019d&app_key=b372563e9a44d1f0f4e5b39d0a4c21c9&ingr=1%20large%20apple
 
     private static boolean NUTRITION_SAVED;
 
@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
                 foodToSearch = intentThatStartedThisActivity.getStringExtra(EXTRA_FOOD_TO_SEARCH);
             } else {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                foodToSearch = sharedPreferences.getString("recent_nutrition", "NoRecentNutrition");
+                foodToSearch = sharedPreferences.getString(getString(R.string.RECENT_NUTRITION), getString(R.string.NO_RECENT_NUITRITION));
             }
             if (foodToSearch != null) {
                 searchFood(foodToSearch);
@@ -78,7 +78,6 @@ public class DetailActivity extends AppCompatActivity {
         setUpNutritionDetailViewModel();
 
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
-        //toolbar.inflateMenu(R.menu.menu_detail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -96,12 +95,11 @@ public class DetailActivity extends AppCompatActivity {
                     .build();
 
             NutritionJsonUtils serviceJson = retrofit.create(NutritionJsonUtils.class);
-            Call<Nutrition> callJson = serviceJson.getNutritionByFood("1ac5019d", "b372563e9a44d1f0f4e5b39d0a4c21c9", foodToSearch);
+            Call<Nutrition> callJson = serviceJson.getNutritionByFood(APP_ID, APP_KEY, foodToSearch);
 
             callJson.enqueue(new Callback<Nutrition>() {
                 @Override
                 public void onResponse(Call<Nutrition> call, Response<Nutrition> response) {
-                    //TODO when result can't be found / enter nothing / enter espace
                     nutrition = response.body();
                     float calories = nutrition.getCalories();
                     String[] dietLabels = nutrition.getDietLabels();
@@ -109,9 +107,12 @@ public class DetailActivity extends AppCompatActivity {
 
                     if (String.valueOf(calories) != null && dietLabels.length != 0 && nutrients != null) {
 
+                        String caloriesLine = getString(R.string.CALORIES_TITLE) + calories + getString(R.string.CALORIES_UNIT);
+                        String dietLabelLine = getString(R.string.DIET_LABEL_TITLE) + dietLabels[0];
+
                         nutrition.setFood(foodToSearch);
                         nutrition.setMainDietLabel(dietLabels[0]);
-                        foodToShare = foodToSearch + "\n" + "Calories : " + calories + " Kcal" + "\n" + "Diet label : " + dietLabels[0] + "\n" + FOOD_SHARE_HASHTAG;
+                        foodToShare = foodToSearch + "\n" + caloriesLine + "\n" + dietLabelLine + "\n" + FOOD_SHARE_HASHTAG;
 
                         Nutrient[] objectNutrients = new Nutrient[31];
                         objectNutrients[0] = nutrients.getENERC_KCAL();
@@ -154,13 +155,11 @@ public class DetailActivity extends AppCompatActivity {
                         for (int i = 0; i < 31; i++) {
                             if (objectNutrients[i] != null) {
                                 labelStringNutrients[i] = objectNutrients[i].getLabel();
-                                //TODO have only 2 numbers after .
                                 quantityStringNutrients[i] = objectNutrients[i].getQuantity();
                                 unitStringNutrients[i] = objectNutrients[i].getUnit();
                                 stringNutrients[i] = labelStringNutrients[i] + " : " + quantityStringNutrients[i] + " " + unitStringNutrients[i];
-                                //Log.d("testss", stringNutrients[i]);
                             } else {
-                                stringNutrients[i] = "Lack of information for this nutrient";
+                                stringNutrients[i] = getString(R.string.LACK_INFORMATION_NUTRIENT);
                             }
                         }
 
@@ -174,8 +173,8 @@ public class DetailActivity extends AppCompatActivity {
                         NutrientAdapter mNutrientAdapter = new NutrientAdapter();
                         mRecyclerView.setAdapter(mNutrientAdapter);
 
-                        detailCaloriesTextView.setText("Calories : " + calories + " Kcal");
-                        detailDietLabelTextView.setText("Diet label : " + dietLabels[0]);
+                        detailCaloriesTextView.setText(caloriesLine);
+                        detailDietLabelTextView.setText(dietLabelLine);
                         mNutrientAdapter.setNutrientData(stringNutrients);
 
                         // Save this food as the recent nutrition by SharedPreference
@@ -183,8 +182,8 @@ public class DetailActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         Gson gson = new Gson();
                         String json = gson.toJson(stringNutrients);
-                        editor.putString("recent_nutrition", foodToSearch)
-                                .putString("nutrients_widget", json);
+                        editor.putString(getString(R.string.RECENT_NUTRITION), foodToSearch)
+                                .putString(getString(R.string.NUTRIENTS_WIDGET), json);
                         editor.apply();
 
                         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(DetailActivity.this);
@@ -193,7 +192,7 @@ public class DetailActivity extends AppCompatActivity {
                         NutrientWidgetProvider.updateNutritionWidgets(DetailActivity.this, appWidgetManager,appWidgetIds);
 
                     } else {
-                        Toast.makeText(DetailActivity.this, "Your entered data isn't correct or it can't be found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DetailActivity.this, getString(R.string.ENTERED_DATA_NOT_CORRECT_OR_CAN_NOT_BE_FOUOND), Toast.LENGTH_LONG).show();
                         finish();
                     }
 
@@ -224,7 +223,6 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_detail, menu);
-        //TODO replace menu option icon
         return true;
     }
 
@@ -242,7 +240,7 @@ public class DetailActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(DetailActivity.this, "Food saved", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DetailActivity.this, getString(R.string.FOOD_SAVED), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -250,7 +248,7 @@ public class DetailActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(DetailActivity.this, "The food has already been saved", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DetailActivity.this, getString(R.string.FOOD_ALREADY_SAVED), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -270,14 +268,14 @@ public class DetailActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(DetailActivity.this, "Food deleted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DetailActivity.this, getString(R.string.FOOD_DELETED), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(DetailActivity.this, "Can't delete the food that has not been saved", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DetailActivity.this, getString(R.string.CAN_NOT_DELETE_NOTE_NOT_BEEN_SAVED), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -287,7 +285,6 @@ public class DetailActivity extends AppCompatActivity {
 
             case R.id.share:
                 shareText(foodToShare);
-                Log.d("log", "share");
                 return true;
 
             default:

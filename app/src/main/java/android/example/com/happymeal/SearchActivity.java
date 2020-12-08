@@ -23,8 +23,6 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(SearchActivity.this, "start search", Toast.LENGTH_SHORT).show();
-                //TODO correct editText
                 String foodToSearch = searchEditText.getText().toString();
 
                 if (!foodToSearch.equals("")) {
@@ -32,13 +30,12 @@ public class SearchActivity extends AppCompatActivity {
                     intentToStartDetailActivity.putExtra(DetailActivity.EXTRA_FOOD_TO_SEARCH, foodToSearch);
                     startActivity(intentToStartDetailActivity);
                 } else {
-                    Toast.makeText(SearchActivity.this, "Please enter the food", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, getString(R.string.PLEASE_ENTER_FOOD), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar_search);
-        //toolbar.inflateMenu(R.menu.menu_detail);
         setSupportActionBar(toolbar);
 
         overridePendingTransition(R.anim.anim_activity_up, R.anim.anim_activity_stay);
