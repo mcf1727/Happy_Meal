@@ -25,29 +25,57 @@
         android:id="@+id/tv_detail_calories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/appbar_layout_detail"
         tools:text="Calories" />
+
+    <View
+        android:id="@+id/calories_diet_label_separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_calories"
+        android:background="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/tv_detail_diet_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_calories"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/calories_diet_label_separate_line"
         tools:text="Diet label" />
+
+    <View
+        android:id="@+id/diet_label_nutrients_separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_diet_label"
+        android:background="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/tv_detail_label_nutrients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_diet_label"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/diet_label_nutrients_separate_line"
         app:layout_constraintLeft_toLeftOf="@id/tv_detail_diet_label"
         android:text="@string/NUTRIENTS_TITLE" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_detail_nutrients"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintTop_toBottomOf="@id/tv_detail_diet_label"
-        app:layout_constraintLeft_toRightOf="@id/tv_detail_label_nutrients" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tv_detail_label_nutrients"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

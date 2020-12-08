@@ -9,6 +9,13 @@
         android:id="@+id/tv_nutrient_list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
         tool:text="Nutrient" />
+
+    <View
+        android:id="@+id/nutrient_separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>
