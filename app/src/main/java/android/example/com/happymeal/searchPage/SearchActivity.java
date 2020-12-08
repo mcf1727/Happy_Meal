@@ -1,9 +1,11 @@
-package android.example.com.happymeal;
+package android.example.com.happymeal.searchPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.example.com.happymeal.R;
+import android.example.com.happymeal.detailPage.DetailActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

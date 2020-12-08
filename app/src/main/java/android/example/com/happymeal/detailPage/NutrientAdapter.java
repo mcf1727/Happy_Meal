@@ -1,6 +1,7 @@
-package android.example.com.happymeal;
+package android.example.com.happymeal.detailPage;
 
 import android.content.Context;
+import android.example.com.happymeal.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

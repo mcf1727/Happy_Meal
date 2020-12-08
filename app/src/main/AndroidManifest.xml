@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyMeal">
 
-        <activity android:name=".DetailActivity"
+        <activity android:name=".detailPage.DetailActivity"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".SearchActivity"
+        <activity android:name=".searchPage.SearchActivity"
             android:parentActivityName=".MainActivity" />
 
         <activity android:name=".MainActivity" >
@@ -32,7 +32,7 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
 
-        <receiver android:name=".NutrientWidgetProvider">
+        <receiver android:name=".widget.NutrientWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -42,7 +42,7 @@
                 android:resource="@xml/nutrient_widget_provider_info" />
         </receiver>
 
-        <service android:name=".ListWidgetService"
+        <service android:name=".widget.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>

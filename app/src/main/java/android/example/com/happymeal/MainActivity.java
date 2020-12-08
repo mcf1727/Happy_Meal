@@ -2,21 +2,19 @@ package android.example.com.happymeal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.content.Intent;
 import android.example.com.happymeal.data.AppDatabase;
 import android.example.com.happymeal.data.Nutrition;
+import android.example.com.happymeal.detailPage.DetailActivity;
+import android.example.com.happymeal.searchPage.SearchActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

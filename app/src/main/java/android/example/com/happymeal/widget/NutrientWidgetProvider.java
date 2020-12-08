@@ -1,4 +1,4 @@
-package android.example.com.happymeal;
+package android.example.com.happymeal.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -6,6 +6,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.example.com.happymeal.detailPage.DetailActivity;
+import android.example.com.happymeal.MainActivity;
+import android.example.com.happymeal.R;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 

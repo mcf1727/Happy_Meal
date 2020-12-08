@@ -1,4 +1,4 @@
-package android.example.com.happymeal;
+package android.example.com.happymeal.detailPage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.example.com.happymeal.AppExecutors;
+import android.example.com.happymeal.R;
 import android.example.com.happymeal.data.AppDatabase;
+import android.example.com.happymeal.widget.NutrientWidgetProvider;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
