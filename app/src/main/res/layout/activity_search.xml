@@ -30,6 +30,7 @@
         android:layout_marginTop="48dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
+        android:inputType="text"
         android:hint="@string/please_enter_the_food_ex_1_apple" />
 
     <Button

@@ -21,6 +21,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar_detail"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout_detail"
+        android:progress="0"
+        android:max="100" />
+
     <TextView
         android:id="@+id/tv_detail_calories"
         android:layout_width="match_parent"

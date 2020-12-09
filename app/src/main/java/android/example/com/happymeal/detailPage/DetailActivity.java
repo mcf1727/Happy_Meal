@@ -18,12 +18,15 @@ import android.example.com.happymeal.data.AppDatabase;
 import android.example.com.happymeal.widget.NutrientWidgetProvider;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +60,9 @@ public class DetailActivity extends AppCompatActivity {
     String foodToSearch;
     private AppDatabase mDb;
 
+    ProgressBar mProgressBar;
+    private int mProgressStatus = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,15 +84,42 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
 
-        setUpNutritionDetailViewModel();
-
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mProgressBar = findViewById(R.id.progress_bar_detail);
+        ProgressAsyncTask mProgressAsyncTask;
+        mProgressAsyncTask = new ProgressAsyncTask();
+        mProgressAsyncTask.execute();
+
     }
 
-    private void setUpNutritionDetailViewModel() {
+    class ProgressAsyncTask extends AsyncTask<String, Integer, String> {
 
+        @Override
+        protected String doInBackground(String... strings) {
+            int max = mProgressBar.getMax();
+            while (mProgressStatus < max) {
+                int add = max/100;
+                mProgressStatus = add + mProgressBar.getProgress();
+                publishProgress(mProgressStatus);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+            mProgressBar.setProgress(values[0]);
+        }
     }
 
     private void searchFood(String foodToSearch) {
@@ -176,6 +209,7 @@ public class DetailActivity extends AppCompatActivity {
                         NutrientAdapter mNutrientAdapter = new NutrientAdapter();
                         mRecyclerView.setAdapter(mNutrientAdapter);
 
+                        mProgressBar.setVisibility(View.GONE);
                         detailCaloriesTextView.setText(caloriesLine);
                         detailDietLabelTextView.setText(dietLabelLine);
                         mNutrientAdapter.setNutrientData(stringNutrients);
