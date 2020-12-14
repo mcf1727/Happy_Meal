@@ -27,6 +27,9 @@ In stage 2, it's time to build it!
 - Before launch the project, please go to the website https://developer.edamam.com/edamam-nutrition-api to ask for a Nutrition Analysis API key.
 Then replace the APP_ID and APP_KEY in "DetailActivity" by yours. After that, you will be able to build the project.
 
+- You can install it from Play Store:
+[<img src="https://github.com/mcf1727/happy_meal/blob/master/photos/play-store-badge.png">](https://play.google.com/store/apps/details?id=com.elisof.fr.happymeal)
+
 - UI Main Activity
 <div align="center">
     <img width="300" alt="layout_phone" src="https://github.com/mcf1727/happy_meal/blob/master/photos/photo1.jpg"/>     <img width="300" alt="layout_phone" src="https://github.com/mcf1727/happy_meal/blob/master/photos/photo2.jpg"/>

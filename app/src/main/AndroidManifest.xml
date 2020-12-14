@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.example.com.happymeal">
+    package="com.elisof.fr.happymeal">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyMeal">
 
-        <activity android:name=".detailPage.DetailActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name="com.elisof.fr.happymeal.detailPage.DetailActivity"
+            android:parentActivityName="com.elisof.fr.happymeal.MainActivity" />
 
-        <activity android:name=".searchPage.SearchActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name="com.elisof.fr.happymeal.searchPage.SearchActivity"
+            android:parentActivityName="com.elisof.fr.happymeal.MainActivity" />
 
-        <activity android:name=".MainActivity" >
+        <activity android:name="com.elisof.fr.happymeal.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,7 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
 
-        <receiver android:name=".widget.NutrientWidgetProvider">
+        <receiver android:name="com.elisof.fr.happymeal.widget.NutrientWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -42,7 +42,7 @@
                 android:resource="@xml/nutrient_widget_provider_info" />
         </receiver>
 
-        <service android:name=".widget.ListWidgetService"
+        <service android:name="com.elisof.fr.happymeal.widget.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
